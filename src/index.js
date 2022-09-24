@@ -5,19 +5,11 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import './index.css';
-import Users from "./components/users";
-
-
-const App = () => {
-    return <Users />;
-};
+import App from "./app/App";
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(<App />);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
