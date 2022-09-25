@@ -12,7 +12,7 @@ const App = () => {
         setUsers(users.map((user) => {
             return user._id === userId ? {...user, bookmark: !user.bookmark} : user;
         }
-        ))
+        ));
     };
 
     const handleDelete = (userId) => {
