@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "./api";
 
-import SearchStatus from "./components/searchStatus";
 import Users from "./components/users";
 
 const App = () => {
     const [users, setUsers] = useState(api.users.fetchAll());
+    useEffect(() => {
+        api.users.fetchAll().then((data) => setUsers(data));
+    }, []);
 
     const handleBookmark = (userId) => {
         setUsers(
@@ -23,7 +25,6 @@ const App = () => {
 
     return (
         <>
-            <SearchStatus length={users.length} />
 
             {users.length > 0 && (
                 <Users
