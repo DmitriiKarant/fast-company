@@ -6,10 +6,17 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import "./index.css";
 import App from "./app/App";
+import { BrowserRouter } from "react-router-dom";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 
-root.render(<App />);
+root.render(
+    <BrowserRouter>
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+    </BrowserRouter>
+);
 
 reportWebVitals();

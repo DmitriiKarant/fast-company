@@ -1,47 +1,35 @@
-import React from "react";
-import Quality from "./qualitie";
-import Bookmark from "./bookmark";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import api from "../api";
 import PropTypes from "prop-types";
 
-const User = ({ _id, name, qualities, profession, completedMeetings, rate, onDelete, bookmark, onHandleBookmark }) => {
-    return (
-        <tr>
-            <td>{name}</td>
-            <td>
-                {qualities.map((qual) => (
-                    <Quality {...qual} key={qual._id} />
-                ))}
-            </td>
-            <td>{profession.name}</td>
-            <td>{completedMeetings}</td>
-            <td>{rate} /5</td>
-            <td>
-                <Bookmark
-                    status={bookmark}
-                    onClick={() => onHandleBookmark(_id)}
-                />
-            </td>
-            <td>
-                <button
-                    onClick={() => onDelete(_id)}
-                    className="btn btn-danger"
-                >
-                    delete
-                </button>
-            </td>
-        </tr>
-    );
+const User = ({ id }) => {
+    const [user, setUser] = useState();
+    const history = useHistory();
+    const handleAllUsers = () => {
+        history.replace("/users");
+    };
+    useEffect(() => {
+        api.users.getById(id).then((data) => setUser(data));
+    });
+    if (user) {
+        return (
+            <>
+                <h1>{user.name}</h1>
+                <h2>Профессия: {user.profession.name}</h2>
+                {user.qualities.map((qual) => <span className={`badge bg-${qual.color} m-1`} key={qual._id}>{qual.name}</span>)}
+                <h6>completedMeetings: {user.completedMeetings}</h6>
+                <h2>Rate: {user.rate}</h2>
+
+                <button onClick={handleAllUsers}>Все пользователи</button>
+            </>
+        );
+    }
+    return "Loading...";
 };
+
 User.propTypes = {
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    qualities: PropTypes.array,
-    profession: PropTypes.object.isRequired,
-    completedMeetings: PropTypes.number.isRequired,
-    rate: PropTypes.number.isRequired,
-    onDelete: PropTypes.func.isRequired,
-    bookmark: PropTypes.bool,
-    onToggleBookMark: PropTypes.func.isRequired
+    id: PropTypes.string
 };
 
 export default User;
