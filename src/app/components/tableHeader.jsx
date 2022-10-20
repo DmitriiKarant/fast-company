@@ -2,14 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const TableHeader = ({ onSort, selectedSort, columns }) => {
-    const handleSortIcon = (item) => {
-        if (selectedSort.path === item && selectedSort.order === "asc" && item) {
-            return <i className="bi bi-caret-down-fill"></i>;
-        } else if (selectedSort.path === item && selectedSort.order === "desc" && item) {
-            return <i className="bi bi-caret-up-fill"></i>;
-        } else {
-            return undefined;
+    const handleSortIcon = (selectedSort, currentPath) => {
+        if (selectedSort.path === currentPath) {
+            if (selectedSort.order === "asc") {
+                return <i className="bi bi-caret-down-fill"></i>;
+            } else {
+                return <i className="bi bi-caret-up-fill"></i>;
+            }
         }
+        return null;
     };
     const handleSort = (item) => {
         if (selectedSort.path === item) {
@@ -22,7 +23,7 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
         <thead>
             <tr>
                 { Object.keys(columns).map((column) => (
-                    <th key={column} onClick={columns[column].path ? () => handleSort(columns[column].path) : undefined } { ...{ role: columns[column].path && "button" } } scope="col">{columns[column].name} {handleSortIcon(columns[column].path)} </th>
+                    <th key={column} onClick={columns[column].path ? () => handleSort(columns[column].path) : undefined } { ...{ role: columns[column].path && "button" } } scope="col">{columns[column].name} {handleSortIcon(selectedSort, columns[column].path)} </th>
                 )) }
             </tr>
         </thead>
