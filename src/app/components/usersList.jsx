@@ -7,18 +7,14 @@ import GroupList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UsersTable from "./usersTable";
 import _ from "lodash";
-import { useParams } from "react-router-dom";
-import User from "./user";
 
-const Users = () => {
+const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState(null);
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const [users, setUsers] = useState();
     const pageSize = 4;
-    const params = useParams();
-    const { postId } = params;
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
@@ -52,9 +48,7 @@ const Users = () => {
             return <i className="bi bi-caret-down-fill"></i>;
         }
     };
-    if (postId) {
-        return <User id={postId} />;
-    } else if (users) {
+    if (users) {
         const filteredUsers = selectedProf ? users.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf)) : users;
         const count = filteredUsers.length;
         const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
@@ -95,8 +89,8 @@ const Users = () => {
         return "loading...";
     }
 };
-Users.propTypes = {
+UsersList.propTypes = {
     users: PropTypes.array
 };
 
-export default Users;
+export default UsersList;
