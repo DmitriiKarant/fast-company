@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TableHeader from "./tableHeader";
-import TableBody from "./tableBody";
-import Bookmark from "./bookmark";
-import QualitiesList from "./qualitiesList";
-import Table from "./table";
+import TableHeader from "../table-components/tableHeader";
+import TableBody from "../table-components/tableBody";
+import Bookmark from "../bookmark";
+import QualitiesList from "../qualitiesList";
+import Table from "../table-components/table";
 import { Link } from "react-router-dom";
 
 const usersTable = ({ users, onSort, selectedSort, onDelete, ...rest }) => {
