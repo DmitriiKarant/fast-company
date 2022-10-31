@@ -58,10 +58,10 @@ const UsersList = () => {
         }
     };
     if (users) {
-        const filteredUsers = selectedProf ? users.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf)) : users;
-        const count = filteredUsers.length;
+        const filteredUsers = selectedProf ? users.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedProf)) : users.filter(item => item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
         const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
-        const userCrop = paginate(sortedUsers, currentPage, pageSize).filter(item => item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
+        const userCrop = paginate(sortedUsers, currentPage, pageSize);
+        const count = filteredUsers.length;
         const clearFilter = () => {
             setSelectedProf();
         };
