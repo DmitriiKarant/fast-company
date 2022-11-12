@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import api from "../../api";
+import api from "../../../api";
 import PropTypes from "prop-types";
 
-const User = ({ id }) => {
+const UserPage = ({ id }) => {
     const [user, setUser] = useState();
+
     const history = useHistory();
+
     const handleAllUsers = () => {
-        history.replace("/users");
+        history.push("/users");
     };
+
+    const handleChangeUser = () => {
+        history.push(`/users/${id}/edit`);
+    };
+
     useEffect(() => {
         api.users.getById(id).then((data) => setUser(data));
-    });
+    }, []);
     if (user) {
         return (
             <>
@@ -22,14 +29,16 @@ const User = ({ id }) => {
                 <h2>Rate: {user.rate}</h2>
 
                 <button onClick={handleAllUsers}>Все пользователи</button>
+                <button className="m-1" onClick={handleChangeUser}>Изменить</button>
             </>
         );
     }
     return "Loading...";
 };
 
-User.propTypes = {
-    id: PropTypes.string
+UserPage.propTypes = {
+    id: PropTypes.string,
+    e: PropTypes.string
 };
 
-export default User;
+export default UserPage;
