@@ -170,6 +170,10 @@ if (!localStorage.getItem("users")) {
     localStorage.setItem("users", JSON.stringify(users));
 }
 
+// if (!localStorage.getItem("comments")) {
+//     localStorage.setItem("comments", JSON.stringify("comments"));
+// }
+
 const fetchAll = () =>
     new Promise((resolve) => {
         window.setTimeout(function () {

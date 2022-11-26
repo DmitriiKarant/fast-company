@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import api from "../../../api";
 import PropTypes from "prop-types";
+import UserCard from "../../ui/userCard";
+import QualitiesCard from "../../ui/qualitiesCard";
+import MeetingsCard from "../../ui/meetingsCard";
+import Comments from "../../ui/comments";
 
 const UserPage = ({ id }) => {
     const [user, setUser] = useState();
 
-    const history = useHistory();
+    // const history = useHistory();
 
-    const handleAllUsers = () => {
-        history.push("/users");
-    };
-
-    const handleChangeUser = () => {
-        history.push(`/users/${id}/edit`);
-    };
+    // const handleAllUsers = () => {
+    //     history.push("/users");
+    // };
 
     useEffect(() => {
         api.users.getById(id).then((data) => setUser(data));
@@ -22,14 +22,19 @@ const UserPage = ({ id }) => {
     if (user) {
         return (
             <>
-                <h1>{user.name}</h1>
-                <h2>Профессия: {user.profession.name}</h2>
-                {user.qualities.map((qual) => <span className={`badge bg-${qual.color} m-1`} key={qual._id}>{qual.name}</span>)}
-                <h6>completedMeetings: {user.completedMeetings}</h6>
-                <h2>Rate: {user.rate}</h2>
-
-                <button onClick={handleAllUsers}>Все пользователи</button>
-                <button className="m-1" onClick={handleChangeUser}>Изменить</button>
+                <div className="container">
+                    <div className="row gutters-sm">
+                        <div className="col-md-4 mb-3">
+                            <UserCard user={user}/>
+                            <QualitiesCard data={user.qualities}/>
+                            <MeetingsCard value={user.completedMeetings}/>
+                        </div>
+                        <div className="col-md-8">
+                            <Comments />
+                        </div>
+                    </div>
+                </div>
+                {/* <button onClick={handleAllUsers}>Все пользователи</button> */}
             </>
         );
     }
