@@ -3,13 +3,10 @@ import PropTypes from "prop-types";
 
 const SelectField = ({ name, label, value, onChange, defaultOption, options, error }) => {
     const optionsArray = !Array.isArray(options) && typeof (options) === "object" ? Object.values(options) : options;
-    console.log(options);
-    console.log(optionsArray);
     const getInputClasses = () => {
         return "form-select" + (error ? " is-invalid" : "");
     };
     const handleChange = ({ target }) => {
-        console.log(target.name);
         onChange({ name: target.name, value: target.value });
     };
 

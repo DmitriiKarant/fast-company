@@ -10,12 +10,6 @@ import Comments from "../../ui/comments";
 const UserPage = ({ id }) => {
     const [user, setUser] = useState();
 
-    // const history = useHistory();
-
-    // const handleAllUsers = () => {
-    //     history.push("/users");
-    // };
-
     useEffect(() => {
         api.users.getById(id).then((data) => setUser(data));
     }, []);
@@ -34,7 +28,6 @@ const UserPage = ({ id }) => {
                         </div>
                     </div>
                 </div>
-                {/* <button onClick={handleAllUsers}>Все пользователи</button> */}
             </>
         );
     }

@@ -13,6 +13,16 @@ const UserProvider = ({ children }) => {
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    async function getUsers() {
+        try {
+            const { content } = await userService.get();
+            setUsers(content);
+            console.log(content);
+            setIsLoading(false);
+        } catch (error) {
+            errorCatcher(error);
+        }
+    }
     useEffect(() => {
         getUsers();
     }, []);
@@ -22,15 +32,7 @@ const UserProvider = ({ children }) => {
             setError(null);
         }
     }, [error]);
-    async function getUsers() {
-        try {
-            const { content } = await userService.get();
-            setUsers(content);
-            setIsLoading(false);
-        } catch (error) {
-            errorCatcher(error);
-        }
-    }
+
     function errorCatcher() {
         const { message } = error.response.data;
         setError(message);
