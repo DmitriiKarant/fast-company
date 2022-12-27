@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom";
 
 const RegisterForm = () => {
     const history = useHistory();
-    const [data, setData] = useState({ email: "", password: "", profession: "", sex: "male", qualities: [], licence: false });
+    const [data, setData] = useState({ email: "", password: "", profession: "", sex: "male", name: "", qualities: [], licence: false });
     const [errors, setErrors] = useState({});
     const { signUp } = useAuth();
     const { professions } = useProfession();
@@ -33,6 +33,13 @@ const RegisterForm = () => {
         email: {
             isRequired: { message: "Электронная почта обязательна для заполнения" },
             isEmail: { message: "Email введен некорректно" }
+        },
+        name: {
+            isRequired: { message: "Имя обязательна для заполнения" },
+            min: {
+                message: "Имя должно состоять минимум из 3 символов",
+                value: 3
+            }
         },
         password: {
             isRequired: { message: "Пароль обязателен для заполнения" },
@@ -105,6 +112,7 @@ const RegisterForm = () => {
         <>
             <form onSubmit={handleSubmit}>
                 <TextField label="Электронная почта" name="email" value={data.email} onChange={handleChange} error={errors.email}/>
+                <TextField label="Имя" name="name" value={data.name} onChange={handleChange} error={errors.name}/>
                 <TextField label="Пароль" type="password" name="password" value={data.password} onChange={handleChange} error={errors.password}/>
                 <SelectField name="profession" onChange={handleChange} label="Выберите вашу профессию" options={professionsList} defaultOption="Choose..." error={errors.profession} value={data.profession}/>
                 <RadioField options={[{ name: "Male", value: "male" }, { name: "Female", value: "female" }, { name: "Other", value: "other" }]} value={data.sex} name="sex" onChange={handleChange} label="Выберите пол"/>
